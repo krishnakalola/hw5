@@ -1,0 +1,23 @@
+import streamlit as st
+import language_model_simple
+
+st.title("Sentence Generator")
+
+st.write('## Input File')
+
+file_name = st.text_input('Enter a file name to draw vocabulary from')
+print(f'file name is {file_name}')
+
+
+if st.button("Generate Sentence"):
+    print('Generate sentence button clicked!!!')
+
+    try:
+        with open(file_name, 'r') as f:
+            training_sentence = f.read()
+
+        word_count_dict = language_model_simple.get_unique_word_count_dict(training_sentence)
+        generated_sentence = language_model_simple.generate_random_setence_weighted(word_count_dict)
+        st.write(generated_sentence)
+    except:
+        st.error("Not a valid file. ")
